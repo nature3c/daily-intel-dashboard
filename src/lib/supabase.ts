@@ -2,7 +2,7 @@ import "server-only";
 
 import { createClient } from "@supabase/supabase-js";
 
-import type { Article, Summary } from "@/types/news";
+import type { Article, NormalizedArticle, Summary } from "@/types/news";
 
 type InsertableArticle = Omit<Article, "id" | "fetched_at" | "created_at"> & {
   id?: string;
@@ -62,3 +62,21 @@ export const supabase = createClient<Database>(supabaseUrl, serviceRoleKey, {
     detectSessionInUrl: false,
   },
 });
+
+export async function upsertArticles(
+  articles: NormalizedArticle[],
+): Promise<number> {
+  if (articles.length === 0) {
+    return 0;
+  }
+
+  const { count, error } = await supabase
+    .from("articles")
+    .upsert(articles, { onConflict: "url", count: "exact" });
+
+  if (error) {
+    throw new Error(`Failed to upsert articles: ${error.message}`);
+  }
+
+  return count ?? articles.length;
+}

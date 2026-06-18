@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "ingest-news": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types --import ./scripts/register-ts-loader.mjs scripts/ingest-news.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.2",

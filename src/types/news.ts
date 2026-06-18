@@ -1,4 +1,6 @@
-export type Category = "ai_ml" | "finance" | "world";
+export const CATEGORIES = ["ai_ml", "finance", "world"] as const;
+
+export type Category = (typeof CATEGORIES)[number];
 
 export type Article = {
   id: string;

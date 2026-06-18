@@ -43,11 +43,11 @@ Legend: `[ ]` todo · `[~]` in progress · `[x]` done
 ## Milestone 2 — News Ingestion (NewsAPI)
 *Goal: fetch and normalize real articles for all three categories.*
 
-- [ ] Read NewsAPI docs; finalize endpoint + query per category (AI/ML, Finance, World).
-- [ ] Implement `src/lib/news.ts`: `fetchCategory(category)` → normalized `Article[]` (map fields, drop items missing url/title, parse `published_at`).
-- [ ] Implement an `upsertArticles(articles)` DB helper (conflict on `url`).
-- [ ] Handle NewsAPI errors/rate limits gracefully (per-category failure shouldn't abort the others).
-- [ ] Verify: running ingestion populates `articles` with deduped rows.
+- [x] Read NewsAPI docs; finalize endpoint + query per category (AI/ML, Finance, World).
+- [x] Implement `src/lib/news.ts`: `fetchCategory(category)` → normalized `Article[]` (map fields, drop items missing url/title, parse `published_at`).
+- [x] Implement an `upsertArticles(articles)` DB helper (conflict on `url`).
+- [x] Handle NewsAPI errors/rate limits gracefully (per-category failure shouldn't abort the others).
+- [x] Verify: running ingestion populates `articles` with deduped rows.
 
 **Done when:** all three categories fetch, normalize, and upsert without dupes.
 
