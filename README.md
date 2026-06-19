@@ -46,6 +46,7 @@ npm run dev      # start the dev server (http://localhost:3000)
 npm run build    # production build
 npm run lint     # lint
 npm run ingest-news # fetch NewsAPI articles and upsert them into Supabase
+npm run summarize-news # generate and store today's Claude digests
 ```
 
 ## Project layout

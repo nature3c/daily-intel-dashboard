@@ -80,3 +80,46 @@ export async function upsertArticles(
 
   return count ?? articles.length;
 }
+
+export async function getArticlesForCategoryDate(
+  category: Article["category"],
+  startInclusive: string,
+  endExclusive: string,
+): Promise<Article[]> {
+  const { data, error } = await supabase
+    .from("articles")
+    .select("*")
+    .eq("category", category)
+    .gte("published_at", startInclusive)
+    .lt("published_at", endExclusive)
+    .order("published_at", { ascending: false });
+
+  if (error) {
+    throw new Error(
+      `Failed to load ${category} articles for summary: ${error.message}`,
+    );
+  }
+
+  return data;
+}
+
+export async function upsertSummary(
+  summary: InsertableSummary | null,
+): Promise<number> {
+  if (!summary) {
+    return 0;
+  }
+
+  const { count, error } = await supabase
+    .from("summaries")
+    .upsert(summary, {
+      onConflict: "category,summary_date",
+      count: "exact",
+    });
+
+  if (error) {
+    throw new Error(`Failed to upsert summary: ${error.message}`);
+  }
+
+  return count ?? 1;
+}

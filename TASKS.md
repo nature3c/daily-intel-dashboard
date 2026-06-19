@@ -56,11 +56,11 @@ Legend: `[ ]` todo · `[~]` in progress · `[x]` done
 ## Milestone 3 — Claude Summaries (Anthropic)
 *Goal: generate and store a per-category digest.*
 
-- [ ] Read the `claude-api` reference; pick the model id (single constant/env).
-- [ ] Write prompt templates in `src/lib/prompts.ts` (one digest per category from titles/descriptions/sources).
-- [ ] Implement `src/lib/anthropic.ts`: client init + `summarize(category, articles)` → markdown.
-- [ ] Implement `upsertSummary(...)` DB helper (conflict on `(category, summary_date)`, record `model` + `article_count`).
-- [ ] Verify: a summary is generated and stored for each category.
+- [x] Read the `claude-api` reference; pick the model id (single constant/env).
+- [x] Write prompt templates in `src/lib/prompts.ts` (one digest per category from titles/descriptions/sources).
+- [x] Implement `src/lib/anthropic.ts`: client init + `summarize(category, articles)` → markdown.
+- [x] Implement `upsertSummary(...)` DB helper (conflict on `(category, summary_date)`, record `model` + `article_count`).
+- [x] Verify: a summary is generated and stored for each category.
 
 **Done when:** each category has a stored, readable Claude summary for the day.
 
