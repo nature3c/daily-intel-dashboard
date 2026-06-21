@@ -16,11 +16,11 @@ Legend: `[ ]` todo · `[~]` in progress · `[x]` done
 ## Milestone 0 — Foundations & Types
 *Goal: shared contracts and config in place before any feature work.*
 
-- [ ] Define shared types in `src/types/news.ts`: `Category` (`'ai_ml' | 'finance' | 'world'`), `Article`, `Summary`, and the normalized article shape.
-- [ ] Add a single source of truth for the category list + display labels (used by UI and ingestion).
-- [ ] Enable Cache Components in `next.config.ts` (`cacheComponents: true`) alongside the existing `reactCompiler: true`.
-- [ ] Confirm `.env.local` keys load correctly; document each in the README.
-- [ ] Add `.env.example` (names only, no secret values).
+- [x] Define shared types in `src/types/news.ts`: `Category` (`'ai_ml' | 'finance' | 'world'`), `Article`, `Summary`, and the normalized article shape.
+- [x] Add a single source of truth for the category list + display labels (used by UI and ingestion).
+- [x] Enable Cache Components in `next.config.ts` (`cacheComponents: true`) alongside the existing `reactCompiler: true`.
+- [x] Confirm `.env.local` keys load correctly; document each in the README.
+- [x] Add `.env.example` (names only, no secret values).
 
 **Done when:** types compile, category enum is importable, config builds clean.
 
@@ -29,12 +29,12 @@ Legend: `[ ]` todo · `[~]` in progress · `[x]` done
 ## Milestone 1 — Supabase Persistence Layer
 *Goal: the database exists and is reachable from the server.*
 
-- [ ] Create the `articles` table (schema per ARCHITECTURE §4) with the `(category, published_at desc)` index and `UNIQUE(url)`.
-- [ ] Create the `summaries` table with `UNIQUE(category, summary_date)`.
-- [ ] Enable RLS on both tables; no public anon policies (server/service-role access only).
-- [ ] Capture the schema as a committed SQL migration in the repo.
-- [ ] Implement `src/lib/supabase.ts`: a server-only client using `SUPABASE_SERVICE_ROLE_KEY` + `NEXT_PUBLIC_SUPABASE_URL`.
-- [ ] Smoke test: insert + read a dummy row from a server context.
+- [x] Create the `articles` table (schema per ARCHITECTURE §4) with the `(category, published_at desc)` index and `UNIQUE(url)`.
+- [x] Create the `summaries` table with `UNIQUE(category, summary_date)`.
+- [x] Enable RLS on both tables; no public anon policies (server/service-role access only).
+- [x] Capture the schema as a committed SQL migration in the repo.
+- [x] Implement `src/lib/supabase.ts`: a server-only client using `SUPABASE_SERVICE_ROLE_KEY` + `NEXT_PUBLIC_SUPABASE_URL`.
+- [x] Smoke test: insert + read a dummy row from a server context.
 
 **Done when:** tables exist, migration is committed, server can read/write.
 

@@ -2,6 +2,12 @@ export const CATEGORIES = ["ai_ml", "finance", "world"] as const;
 
 export type Category = (typeof CATEGORIES)[number];
 
+export const CATEGORY_LABELS: Record<Category, string> = {
+  ai_ml: "AI / ML",
+  finance: "Finance",
+  world: "World",
+};
+
 export type Article = {
   id: string;
   category: Category;
