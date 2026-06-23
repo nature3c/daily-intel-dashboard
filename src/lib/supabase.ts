@@ -19,6 +19,11 @@ type InsertableSummary = Omit<Summary, "id" | "created_at"> & {
 
 type UpdatableSummary = Partial<InsertableSummary>;
 
+export type PrunedRowCounts = {
+  articles: number;
+  summaries: number;
+};
+
 export type Database = {
   public: {
     Tables: {
@@ -122,4 +127,42 @@ export async function upsertSummary(
   }
 
   return count ?? 1;
+}
+
+export async function pruneExpiredContent(
+  now = new Date(),
+): Promise<PrunedRowCounts> {
+  const cutoff = new Date(now);
+  cutoff.setUTCDate(cutoff.getUTCDate() - 7);
+
+  const cutoffTimestamp = cutoff.toISOString();
+  const cutoffDate = cutoffTimestamp.slice(0, 10);
+
+  const [articlesResult, summariesResult] = await Promise.all([
+    supabase
+      .from("articles")
+      .delete({ count: "exact" })
+      .lt("published_at", cutoffTimestamp),
+    supabase
+      .from("summaries")
+      .delete({ count: "exact" })
+      .lt("summary_date", cutoffDate),
+  ]);
+
+  if (articlesResult.error) {
+    throw new Error(
+      `Failed to prune expired articles: ${articlesResult.error.message}`,
+    );
+  }
+
+  if (summariesResult.error) {
+    throw new Error(
+      `Failed to prune expired summaries: ${summariesResult.error.message}`,
+    );
+  }
+
+  return {
+    articles: articlesResult.count ?? 0,
+    summaries: summariesResult.count ?? 0,
+  };
 }

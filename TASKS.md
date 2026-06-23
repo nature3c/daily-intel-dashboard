@@ -69,14 +69,14 @@ Legend: `[ ]` todo · `[~]` in progress · `[x]` done
 ## Milestone 4 — Refresh Route + Scheduling + Retention
 *Goal: one daily job that ingests, summarizes, prunes, and revalidates.*
 
-- [ ] Read the Route Handler + `after()` + route-segment-config docs.
-- [ ] Implement `POST /api/refresh-news` (`src/app/api/refresh-news/route.ts`): orchestrate fetch → upsert → summarize → prune → `revalidateTag`.
-- [ ] Set `runtime = 'nodejs'` and an appropriate `maxDuration` on the route.
-- [ ] Authorize via `Authorization: Bearer ${CRON_SECRET}`; return `401` otherwise.
-- [ ] Implement 7-day retention: delete `articles`/`summaries` older than `now() - 7 days`.
-- [ ] Add `vercel.json` with a daily cron pointing at `/api/refresh-news`.
-- [ ] Return a JSON status report (counts per category, pruned count, timing).
-- [ ] Verify: manual authorized call runs end-to-end and is idempotent on re-run.
+- [x] Read the Route Handler + `after()` + route-segment-config docs.
+- [x] Implement `POST /api/refresh-news` (`src/app/api/refresh-news/route.ts`): orchestrate fetch → upsert → summarize → prune → `revalidateTag`.
+- [x] Use the Cache Components Node.js runtime default and set an appropriate `maxDuration` on the route.
+- [x] Authorize via `Authorization: Bearer ${CRON_SECRET}`; return `401` otherwise.
+- [x] Implement 7-day retention: delete `articles`/`summaries` older than `now() - 7 days`.
+- [x] Add `vercel.json` with a daily cron pointing at `/api/refresh-news`.
+- [x] Return a JSON status report (counts per category, pruned count, timing).
+- [x] Verify: manual authorized call runs end-to-end and is idempotent on re-run.
 
 **Done when:** one authorized call refreshes everything and prunes old data; unauthorized calls are rejected.
 

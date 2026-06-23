@@ -213,8 +213,9 @@ returns promptly.
   The Route Handler rejects (`401`) any request whose bearer token does not
   match `process.env.CRON_SECRET`. This prevents the public endpoint from being
   abused to burn NewsAPI/Anthropic quota.
-- **Runtime/limits:** the route sets `export const runtime = 'nodejs'` (needed
-  for the Anthropic SDK + service-role Supabase) and raises
+- **Runtime/limits:** Cache Components requires the default Node.js runtime and
+  rejects an explicit `runtime` route export, so the route relies on that
+  default for the Anthropic SDK + service-role Supabase work. It raises
   `export const maxDuration` to cover the multi-step fetch+LLM work.
 - **Idempotency:** upserts on `url` (articles) and `(category, summary_date)`
   (summaries) mean re-running the job — manually or on retry — never duplicates.
@@ -303,8 +304,9 @@ differ from older mental models:
   "previous model" and is not the path chosen here.
 - **`unstable_instant`** route export exists in v16 for instant-navigation
   validation, Cache-Components-only, and cannot be used in Client Components.
-- **`runtime`** must be `'nodejs'` for the refresh route (edge is unsupported
-  with Cache Components and can't run the service-role/Anthropic work safely).
+- **Runtime:** Cache Components requires Node.js and rejects an explicit
+  `runtime` route export. The refresh route therefore uses the Node.js default;
+  Edge is unsupported and cannot run this service-role/Anthropic work safely.
 - The React Compiler is on, so avoid manual memoization.
 
 ---

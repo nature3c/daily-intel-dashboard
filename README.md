@@ -49,6 +49,20 @@ npm run ingest-news # fetch NewsAPI articles and upsert them into Supabase
 npm run summarize-news # generate and store today's Claude digests
 ```
 
+## Operations
+
+Run the full refresh pipeline locally or against a deployment with an authorized
+`POST` request:
+
+```bash
+curl -X POST http://localhost:3000/api/refresh-news \
+  -H "Authorization: Bearer ${CRON_SECRET}"
+```
+
+The route ingests articles, generates summaries, removes data older than seven
+days, and revalidates the `articles` and `summaries` cache tags. Vercel Cron
+invokes the same protected handler with `GET` at 06:00 UTC each day.
+
 ## Project layout
 
 ```
